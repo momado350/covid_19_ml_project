@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pickle
 
-df = pd.read_csv('resources/cleaned.csv')
+df = pd.read_csv('cleaned.csv')
 
 df = df.drop(columns=['Week Start','Cases - Cumulative','Percent Tested Positive - Weekly','Deaths - Cumulative','Death Rate - Cumulative',
        'Population','Percent Tested Positive - Cumulative','Test Rate - Weekly','Tests - Cumulative','Test Rate - Cumulative','Case Rate - Cumulative','Week End','Week Number','Test Rate - Cumulative','Row ID','ZIP Code Location', 'ZIP Code'])
