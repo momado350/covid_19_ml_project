@@ -1,6 +1,5 @@
+# import all dependencies
 from flask import Flask, jsonify, render_template,request
-
-
 import numpy as np
 import pandas as pd
 import pickle
@@ -12,8 +11,10 @@ import pickle
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 
+# create our web route
 @app.route("/",methods=['POST', 'GET'])
 def main():
+    # handle user inputs
 #https://stackoverflow.com/questions/56934303/assign-a-variable-from-html-input-to-python-flask  
     try:
         state = request.form.get('state')
@@ -32,7 +33,7 @@ def main():
     global output 
     output=[wcases,wcaserate,wtests,wdeathrate]
     
-
+    # scale data
     from sklearn.preprocessing import StandardScaler
 
     X_test =output
@@ -40,10 +41,14 @@ def main():
     X_test =np.asarray(X_test)
     X_test =X_test.reshape(1,-1)
 
+    # make prediction using user input data
     predictions = model.predict(X_test)
 
+    # render html with features enterd and prediction made
     return render_template("index.html",output=output, predictions=predictions,state=state,zipcode=zipcode)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# run flask app
+# app is under development that is why we still using dev env with debug=True
 if __name__ == "__main__":
     app.run(debug=True)
