@@ -19,6 +19,7 @@ if ENV == 'dev':
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # set up a database instance
 
