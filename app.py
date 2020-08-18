@@ -1,5 +1,6 @@
 # import all dependencies
 from flask import Flask, jsonify, render_template,request
+from flask_sqlalchemy import SQLAlchemy
 import numpy as np
 import pandas as pd
 import pickle
@@ -10,6 +11,9 @@ import pickle
 #======================================================
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/zebra_db'
+
+# set up a database instance
 
 # create our web route
 @app.route("/",methods=['POST', 'GET'])
