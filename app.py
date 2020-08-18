@@ -11,7 +11,14 @@ import pickle
 #======================================================
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/zebra_db'
+ENV = 'prod'
+
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/zebra_db'
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = ''
 
 # set up a database instance
 
