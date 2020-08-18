@@ -11,37 +11,7 @@ import pickle
 #======================================================
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
-ENV = 'prod'
 
-if ENV == 'dev':
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/zebra_db'
-else:
-    app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-class Cases(db.Model):
-    __tablename__ = 'covid19'
-    id = db.Column(db.Integer, primary_key = True) #primary key column
-    cases_weekly = db.Column(db.Integer, unique = False) 
-    case_rate_weekly = db.Column(db.Float, unique = False)
-    tests_weekly = db.Column(db.Integer, unique = False)
-    death_rate_weekly = db.Column(db.Float, unique = False)
-    predictions = db.Column(db.Float, unique = False)
-
-    def __init__(self, cases_weekly, case_rate_weekly, tests_weekly, death_rate_weekly, predictions):
-        self.cases_weekly = cases_weekly
-        self.case_rate_weekly = case_rate_weekly
-        self.tests_weekly = tests_weekly
-        self.death_rate_weekly = death_rate_weekly
-        self.predictions = predictions
-        
-
-
-
-# set up a database instance
 
 # create our web route
 @app.route("/",methods=['POST', 'GET'])
